@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SPB2 to side B - SV"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Side B to processor - SV"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor to side C - SV"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Side C to processor - SV"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

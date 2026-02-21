@@ -1,0 +1,49 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "sp3 to side c"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "side c to net"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "net to side a"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "side a to processor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "processor to hp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "hp to side e"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

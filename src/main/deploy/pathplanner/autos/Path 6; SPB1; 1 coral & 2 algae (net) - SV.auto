@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SPB1 to side B - SV"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Side B to Bnet - SV"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bnet to side A - SV"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Side A to Bnet - SV"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

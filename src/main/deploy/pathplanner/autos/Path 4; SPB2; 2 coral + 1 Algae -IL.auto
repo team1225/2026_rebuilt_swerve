@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SP2 side B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "side b to processor "
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": " processor to f "
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "side f to coral pick up "
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "coral pick up to side f "
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

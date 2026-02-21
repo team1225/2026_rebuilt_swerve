@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+<<<<<<<< HEAD:src/main/deploy/pathplanner/autos/SP3 - 2 coral + leave SZ.auto
+            "pathName": "SPB3 - Leave SZ + drop preloaded coral on side C"
+========
+            "pathName": "SPB2 to side B"
+>>>>>>>> 576736c650a34503ab476654c78b068f40a41265:src/main/deploy/pathplanner/autos/Path 3; SPB1; Remove algae & 2 coral - SV.auto
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+<<<<<<<< HEAD:src/main/deploy/pathplanner/autos/SP3 - 2 coral + leave SZ.auto
+            "pathName": "SPB3 - Move to left coral pickup station from side C"
+========
+            "pathName": "Side B to Coral Station"
+>>>>>>>> 576736c650a34503ab476654c78b068f40a41265:src/main/deploy/pathplanner/autos/Path 3; SPB1; Remove algae & 2 coral - SV.auto
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+<<<<<<<< HEAD:src/main/deploy/pathplanner/autos/SP3 - 2 coral + leave SZ.auto
+            "pathName": "SPB3 - Move from left coral pickup station to side D"
+========
+            "pathName": "Coral station to side D"
+>>>>>>>> 576736c650a34503ab476654c78b068f40a41265:src/main/deploy/pathplanner/autos/Path 3; SPB1; Remove algae & 2 coral - SV.auto
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

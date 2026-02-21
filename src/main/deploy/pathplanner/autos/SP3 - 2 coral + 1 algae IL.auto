@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SP 3 coral side c"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": " coral side c to net "
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": " net to processor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": " coral station to side D "
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

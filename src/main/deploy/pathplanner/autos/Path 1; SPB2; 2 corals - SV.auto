@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SPB2 to side B - SV"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Side B to left coral station - SV"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left coral station to side D - SV"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

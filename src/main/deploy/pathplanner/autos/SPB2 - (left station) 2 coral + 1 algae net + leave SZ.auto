@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SPB2 - Leave sz + 1 coral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SPB2 - Side B to net"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SPB2 - Net to Left Coral Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SPB2 - Left Coral Pickup to Side E"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
