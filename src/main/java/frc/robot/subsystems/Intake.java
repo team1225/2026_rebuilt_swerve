@@ -14,7 +14,8 @@ import frc.robot.Ports;
 import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
-      private final SparkMax motor;
+  
+  private final SparkMax motor;
 	private final SparkMaxConfig motorConfig;
 
   /** Creates a new Intake. */
@@ -33,11 +34,15 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void Run() {
+  public void run() {
     motor.set(IntakeConstants.INTAKE_SPEED);
   }
 
-  public void Stop() {
+  public void reverse() {
+    motor.set(-0.75 * IntakeConstants.INTAKE_SPEED);
+  }
+
+  public void stop() {
     motor.set(0);
   }
 }

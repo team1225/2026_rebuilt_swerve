@@ -161,6 +161,18 @@ public final class Constants {
 		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kBrake;
 	}
 
+	public static final class ShooterConstants {
+		public static final double SHOOTER_SPEED = 1;
+		public static final int CURRENT_LIMIT_AMPS = 80;
+		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kCoast;
+	}
+
+	public static final class AgitatorConstants {
+		public static final double AGITATOR_SPEED = 1;
+		public static final int CURRENT_LIMIT_AMPS = 30;
+		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kCoast;
+	}
+
 	/*
 	public static final class PivotArmConstants {
 		public static final IdleMode TURNING_MOTOR_IDLE_MODE = IdleMode.kBrake;

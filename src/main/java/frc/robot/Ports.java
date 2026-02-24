@@ -61,6 +61,8 @@ public class Ports {
 			public static final int REAR_RIGHT_TURNING = 9;
 
 			public static final int INTAKE = 14;
+			public static final int AGITATOR = 13;
+			public static final int SHOOTER = 12;
 		}
 		
 		/**

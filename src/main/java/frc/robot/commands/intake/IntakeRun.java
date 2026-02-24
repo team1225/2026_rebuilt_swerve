@@ -11,6 +11,7 @@ import frc.robot.subsystems.Intake;
 public class IntakeRun extends Command {
   /** Creates a new Intake. */
   private Intake intake;
+  
   public IntakeRun(Intake intake) {
     this.intake = intake;
     addRequirements(intake);
@@ -23,13 +24,13 @@ public class IntakeRun extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.Run();
+    intake.run();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.Stop();
+    intake.stop();
   }
 
   // Returns true when the command should end.
