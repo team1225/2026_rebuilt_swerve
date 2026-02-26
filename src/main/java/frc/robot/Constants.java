@@ -168,7 +168,7 @@ public final class Constants {
 	}
 
 	public static final class AgitatorConstants {
-		public static final double AGITATOR_SPEED = 1;
+		public static final double AGITATOR_SPEED = -1;
 		public static final int CURRENT_LIMIT_AMPS = 30;
 		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kCoast;
 	}
