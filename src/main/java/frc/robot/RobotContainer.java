@@ -147,7 +147,7 @@ public class RobotContainer {
 					-MathUtil.applyDeadband(driverController.getLeftY(), GAMEPAD_AXIS_THRESHOLD),
 					-MathUtil.applyDeadband(driverController.getLeftX(), GAMEPAD_AXIS_THRESHOLD),
 					-MathUtil.applyDeadband(driverController.getRightX(), GAMEPAD_AXIS_THRESHOLD),
-					true, true),
+					true, false),
 				drivetrain));
 
 		//indicator.setDefaultCommand(new IndicatorIndicateUsingCamera(indicator)); // default command, only runs when robot is enabled
