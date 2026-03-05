@@ -5,27 +5,17 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
-
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DrivetrainConstants;
-
-import frc.robot.sensors.*;
-import frc.robot.subsystems.Agitator;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.SwerveDrivetrain;
 //import frc.robot.subsystems.TelescopingArm;
 //import frc.robot.subsystems.AlgaeBlaster;
 //import frc.robot.subsystems.Coralator;
@@ -36,8 +26,9 @@ import frc.robot.subsystems.SwerveDrivetrain;
 //import frc.robot.commands.coralator.Eject;
 //import frc.robot.commands.climber.Out;
 //import frc.robot.commands.climber.Climb;
-import frc.robot.commands.drivetrain.*;
-import frc.robot.commands.intake.*;
+import frc.robot.commands.drivetrain.DrivetrainSetXFormation;
+import frc.robot.commands.intake.IntakeReverse;
+import frc.robot.commands.intake.IntakeRun;
 //import frc.robot.interfaces.ICamera;
 //import frc.robot.commands.indicator.*;
 //import frc.robot.commands.pivot_arm.ManuallyAdjustPivotArm;
@@ -45,6 +36,11 @@ import frc.robot.commands.intake.*;
 //import frc.robot.subsystems.PivotArm;
 //import frc.robot.commands.groups.*;
 import frc.robot.commands.shooterSystem.ShooterSystemRun;
+import frc.robot.sensors.HMAccelerometer;
+import frc.robot.subsystems.Agitator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SwerveDrivetrain;
 
 
 /*
@@ -170,14 +166,17 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 
 		// driver controls
-		driverController.a()
+		driverController.axisGreaterThan(LT,0.5)
 			.whileTrue(new ShooterSystemRun(agitator, shooter));
 
-		driverController.b()
+		driverController.axisGreaterThan(RT,0.5)
 			.whileTrue(new IntakeRun(intake));
 
 		driverController.x()
 			.whileTrue(new DrivetrainSetXFormation(drivetrain));
+
+		driverController.y()
+			.whileTrue(new IntakeReverse(intake));
 		/*	
 		driverController.x()
 			.whileTrue(new Out(climber));

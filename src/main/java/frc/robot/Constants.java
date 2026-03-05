@@ -61,8 +61,8 @@ public final class Constants {
 	public static final class DrivetrainConstants {
 		// Driving Parameters - Note that these are not the maximum capable speeds of
 		// the robot, rather the allowed maximum speeds
-		public static final double MAX_SPEED_METERS_PER_SECOND = 4.0; //4.42; //4.8;
-		public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = 2 * Math.PI; // radians per second
+		public static final double MAX_SPEED_METERS_PER_SECOND = 8.0; // 4.0; //4.42; //4.8;
+		public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = 4 * Math.PI; // radians per second
 
 		public static final double DIRECTION_SLEW_RATE = 1.2; // radians per second
 		public static final double MAGNITUDE_SLEW_RATE = 1.8; // 2.0; //1.8; // percent per second (1 = 100%)
@@ -156,8 +156,9 @@ public final class Constants {
 	}
 
 	public static final class IntakeConstants {
-		public static final double INTAKE_SPEED = 0.75;
-		public static final int CURRENT_LIMIT_AMPS = 30;
+		public static final double INTAKE_SPEED = 1;
+		public static final double INTAKE_REVERSE_SPEED = -0.75;
+		public static final int CURRENT_LIMIT_AMPS = 60;
 		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kBrake;
 	}
 

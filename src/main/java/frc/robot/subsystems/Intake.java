@@ -39,7 +39,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void reverse() {
-    motor.set(-0.75 * IntakeConstants.INTAKE_SPEED);
+    motor.set(IntakeConstants.INTAKE_REVERSE_SPEED);
   }
 
   public void stop() {

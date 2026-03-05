@@ -12,7 +12,7 @@ public class IntakeReverse extends Command {
   /** Creates a new IntakeReverse. */
   private Intake intake;
 
-  public IntakeReverse() {
+  public IntakeReverse(Intake intake) {
     this.intake = intake;
     addRequirements(intake);
   }
