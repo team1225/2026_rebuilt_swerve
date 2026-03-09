@@ -39,6 +39,10 @@ public class Shooter extends SubsystemBase {
     motor.set(-0.75 * ShooterConstants.SHOOTER_SPEED);
   }
 
+  public boolean isAtSpeed() {
+    return motor.getEncoder().getVelocity() >= ShooterConstants.SHOOTER_SPEED_RPM;
+  }
+
   public void stop() {
     motor.set(0);
   }

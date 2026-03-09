@@ -29,6 +29,7 @@ import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.drivetrain.DrivetrainSetXFormation;
 import frc.robot.commands.intake.IntakeReverse;
 import frc.robot.commands.intake.IntakeRun;
+import frc.robot.commands.shooterSystem.ShooterSystemRun;
 //import frc.robot.interfaces.ICamera;
 //import frc.robot.commands.indicator.*;
 //import frc.robot.commands.pivot_arm.ManuallyAdjustPivotArm;
@@ -264,7 +265,7 @@ public class RobotContainer {
 				return new RunCommand(
 					() -> drivetrain.drive(0.2, 0, 0, false, false),
 					drivetrain)
-					.withTimeout(2);
+					.withTimeout(2).andThen(new ShooterSystemRun(agitator, shooter).withTimeout(5)); //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			
 			case AUTON_DRIVE_PLUS:
 				return new RunCommand(

@@ -163,6 +163,7 @@ public final class Constants {
 	}
 
 	public static final class ShooterConstants {
+		public static final double SHOOTER_SPEED_RPM = 3000;//TODO: determine this value experimentally
 		public static final double SHOOTER_SPEED = 1;
 		public static final int CURRENT_LIMIT_AMPS = 80;
 		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kCoast;
