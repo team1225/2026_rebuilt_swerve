@@ -56,6 +56,8 @@ src/main/java/frc/robot/
 
 ## Getting Started
 
+Putt the robot shooter side toward the inside of the field and make sure it is parallel with the field
+
 ### Prerequisites
 1. Install WPILib 2026
 2. Install REV Hardware Client
