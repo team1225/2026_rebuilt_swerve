@@ -140,8 +140,8 @@ public class RobotContainer {
 		drivetrain.setDefaultCommand(
 			new RunCommand(
 				() -> drivetrain.drive(
-					-MathUtil.applyDeadband(driverController.getLeftY(), GAMEPAD_AXIS_THRESHOLD),
-					-MathUtil.applyDeadband(driverController.getLeftX(), GAMEPAD_AXIS_THRESHOLD),
+					MathUtil.applyDeadband(driverController.getLeftY(), GAMEPAD_AXIS_THRESHOLD),
+					MathUtil.applyDeadband(driverController.getLeftX(), GAMEPAD_AXIS_THRESHOLD),
 					-MathUtil.applyDeadband(driverController.getRightX(), GAMEPAD_AXIS_THRESHOLD),
 					true, false),
 				drivetrain));
@@ -262,7 +262,7 @@ public class RobotContainer {
 		switch (autonOption) {
 			case AUTON_SIMPLE_DRIVE:
 				return new RunCommand(
-					() -> drivetrain.drive(-0.2, 0, 0, false, false),
+					() -> drivetrain.drive(0.2, 0, 0, false, false),
 					drivetrain)
 					.withTimeout(2);
 			

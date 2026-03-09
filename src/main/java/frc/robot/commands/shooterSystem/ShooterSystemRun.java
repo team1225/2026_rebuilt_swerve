@@ -4,6 +4,8 @@
 
 package frc.robot.commands.shooterSystem;
 
+import java.io.OutputStream;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Agitator;
@@ -30,7 +32,13 @@ public class ShooterSystemRun extends Command {
   @Override
   public void execute() {
     shooter.run();
-    Commands.waitSeconds(2);
+    // Commands.waitSeconds(20);
+    // long timeout = 20 * 1000;
+    // try{
+      // wait(timeout);
+    // }catch (Exception e){
+      // TO DO Handle exeption
+    // }
     agitator.run();
   }
 
