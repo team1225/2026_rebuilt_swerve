@@ -76,7 +76,7 @@ public class RobotContainer {
 	public static final String AUTON_TEST_HARDCODED_MOVE_1 = "Test Hardcoded Move 1";
 	public static final String AUTON_TEST_HARDCODED_MOVE_2 = "Test Hardcoded Move 2";
 	public static final String AUTON_TEST_TRAJECTORY_GENERATION = "Test Trajectory Generation";
-	public static final String AUTON_SIMPLE_DRIVE = "Simple Drive";
+	public static final String AUTON_SIMPLE_DRIVE_AND_SHOOT = "Simple Drive and Shoot";
 	public static final String AUTON_DRIVE_PLUS = "Drive plus";
 	//private String autonSelected;
 	private SendableChooser<String> autonChooser = new SendableChooser<>();
@@ -126,7 +126,7 @@ public class RobotContainer {
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public RobotContainer() {
-		autonOptionChooser.setDefaultOption("Simple Drive", AUTON_SIMPLE_DRIVE);
+		autonOptionChooser.setDefaultOption("Simple Drive and Shoot", AUTON_SIMPLE_DRIVE_AND_SHOOT);
 		autonOptionChooser.addOption("Drive plus", AUTON_DRIVE_PLUS);
 		autonOptionChooser.addOption("Do nothing", AUTON_DO_NOTHING);
 		SmartDashboard.putData("Auton options", autonOptionChooser);
@@ -261,7 +261,7 @@ public class RobotContainer {
 		System.out.println("Auton option: " + autonOption);
 		
 		switch (autonOption) {
-			case AUTON_SIMPLE_DRIVE:
+			case AUTON_SIMPLE_DRIVE_AND_SHOOT:
 				return new RunCommand(
 					() -> drivetrain.drive(0.2, 0, 0, false, false),
 					drivetrain)
