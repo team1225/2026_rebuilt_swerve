@@ -269,10 +269,10 @@ public class RobotContainer {
 		
 		switch (autonOption) {
 			case AUTON_SIMPLE_DRIVE_AND_SHOOT:
-				return (new RunCommand(
+				return new RunCommand(
 					() -> drivetrain.drive(0.18, 0, 0, false, false),
 					drivetrain)
-					.withTimeout(3).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(5.0))); //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					.withTimeout(2.5).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(5.0)); //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			
 			case AUTON_DRIVE_PLUS:
 				return new RunCommand(
