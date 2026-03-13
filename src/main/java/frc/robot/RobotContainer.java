@@ -43,6 +43,8 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrivetrain;
 
+import edu.wpi.first.cameraserver.CameraServer;
+
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -153,6 +155,11 @@ public class RobotContainer {
 		// pivotArm.setDefaultCommand(new ManuallyAdjustPivotArm(pivotArm, coDriverController));
 		//indicatorTimedScrollRainbow = new IndicatorTimedScrollRainbow(indicator,1);
 		//indicatorTimedScrollRainbow.schedule(); // we schedule the command as we are starting up
+
+		CameraServer.startAutomaticCapture();
+		// CameraServer.startAutomaticCapture();
+		
+		// publish camera stream to Shuffleboard "Vision" tab
 	}
 
 	/**
@@ -265,7 +272,7 @@ public class RobotContainer {
 				return new RunCommand(
 					() -> drivetrain.drive(0.2, 0, 0, false, false),
 					drivetrain)
-					.withTimeout(2).andThen(new ShooterSystemRun(agitator, shooter).withTimeout(5)); //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					.withTimeout(2).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(5.0)); //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			
 			case AUTON_DRIVE_PLUS:
 				return new RunCommand(
