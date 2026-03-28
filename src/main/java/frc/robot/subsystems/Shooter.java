@@ -34,6 +34,8 @@ public class Shooter extends SubsystemBase {
   public void run() {
     if (this.getSpeed() <= ShooterConstants.SHOOTER_SPEED_RPM+ShooterConstants.SHOOTER_SPEED_RPM_RAISED_MAX) {
      motor.set(ShooterConstants.SHOOTER_SPEED); 
+    }else{
+      motor.set(0);
     }
   }
 
