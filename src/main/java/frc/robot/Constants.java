@@ -61,7 +61,7 @@ public final class Constants {
 	public static final class DrivetrainConstants {
 		// Driving Parameters - Note that these are not the maximum capable speeds of
 		// the robot, rather the allowed maximum speeds
-		public static final double MAX_SPEED_METERS_PER_SECOND = 8.0; // 4.0; //4.42; //4.8;
+		public static final double MAX_SPEED_METERS_PER_SECOND = 16;//8.0; // 4.0; //4.42; //4.8;
 		public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = 4 * Math.PI; // radians per second
 
 		public static final double DIRECTION_SLEW_RATE = 1.2; // radians per second
@@ -163,7 +163,7 @@ public final class Constants {
 	}
 
 	public static final class ShooterConstants {
-		public static final double SHOOTER_SPEED_RPM = 5500;//TODO: determine this value experimentally
+		public static final double SHOOTER_SPEED_RPM = 4700;//TODO: determine this value experimentally
 		public static final double SHOOTER_SPEED = 1;
 		public static final int CURRENT_LIMIT_AMPS = 80;
 		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kCoast;
