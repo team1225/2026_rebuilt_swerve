@@ -63,6 +63,8 @@ public class Ports {
 			public static final int INTAKE = 14;
 			public static final int AGITATOR = 15;
 			public static final int SHOOTER = 16;
+
+			public static final int CLIMBER = 20;
 		}
 		
 		/**

@@ -162,6 +162,13 @@ public final class Constants {
 		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kBrake;
 	}
 
+	public static final class ClimberConstants {
+		public static final double INTAKE_SPEED = 0.5;
+		public static final double INTAKE_REVERSE_SPEED = -0.5;
+		public static final int CURRENT_LIMIT_AMPS = 60;
+		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kBrake;
+	}
+
 	public static final class ShooterConstants {
 		public static final double SHOOTER_SPEED_RPM = 4700;
 		public static final double SHOOTER_SPEED = 1;
