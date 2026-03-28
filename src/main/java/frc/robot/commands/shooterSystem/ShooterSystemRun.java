@@ -39,9 +39,12 @@ public class ShooterSystemRun extends Command {
     // }catch (Exception e){
       // TO DO Handle exeption
     // }
-    agitator.run();
+    if (shooter.isAtSpeed()){
+      agitator.run();
+    }
+      
   }
-
+  
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

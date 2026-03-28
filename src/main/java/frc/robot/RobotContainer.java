@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -29,6 +30,7 @@ import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.drivetrain.DrivetrainSetXFormation;
 import frc.robot.commands.intake.IntakeReverse;
 import frc.robot.commands.intake.IntakeRun;
+import frc.robot.commands.shooterSystem.ShooterSystemRun;
 //import frc.robot.interfaces.ICamera;
 //import frc.robot.commands.indicator.*;
 //import frc.robot.commands.pivot_arm.ManuallyAdjustPivotArm;
@@ -41,6 +43,8 @@ import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrivetrain;
+
+import edu.wpi.first.cameraserver.CameraServer;
 
 
 /*
@@ -75,7 +79,7 @@ public class RobotContainer {
 	public static final String AUTON_TEST_HARDCODED_MOVE_1 = "Test Hardcoded Move 1";
 	public static final String AUTON_TEST_HARDCODED_MOVE_2 = "Test Hardcoded Move 2";
 	public static final String AUTON_TEST_TRAJECTORY_GENERATION = "Test Trajectory Generation";
-	public static final String AUTON_SIMPLE_DRIVE = "Simple Drive";
+	public static final String AUTON_SIMPLE_DRIVE_AND_SHOOT = "Simple Drive and Shoot";
 	public static final String AUTON_DRIVE_PLUS = "Drive plus";
 	//private String autonSelected;
 	private SendableChooser<String> autonChooser = new SendableChooser<>();
@@ -125,7 +129,7 @@ public class RobotContainer {
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public RobotContainer() {
-		autonOptionChooser.setDefaultOption("Simple Drive", AUTON_SIMPLE_DRIVE);
+		autonOptionChooser.setDefaultOption("Simple Drive and Shoot", AUTON_SIMPLE_DRIVE_AND_SHOOT);
 		autonOptionChooser.addOption("Drive plus", AUTON_DRIVE_PLUS);
 		autonOptionChooser.addOption("Do nothing", AUTON_DO_NOTHING);
 		SmartDashboard.putData("Auton options", autonOptionChooser);
@@ -152,6 +156,11 @@ public class RobotContainer {
 		// pivotArm.setDefaultCommand(new ManuallyAdjustPivotArm(pivotArm, coDriverController));
 		//indicatorTimedScrollRainbow = new IndicatorTimedScrollRainbow(indicator,1);
 		//indicatorTimedScrollRainbow.schedule(); // we schedule the command as we are starting up
+
+		CameraServer.startAutomaticCapture();
+		// CameraServer.startAutomaticCapture();
+		
+		// publish camera stream to Shuffleboard "Vision" tab
 	}
 
 	/**
@@ -260,11 +269,11 @@ public class RobotContainer {
 		System.out.println("Auton option: " + autonOption);
 		
 		switch (autonOption) {
-			case AUTON_SIMPLE_DRIVE:
+			case AUTON_SIMPLE_DRIVE_AND_SHOOT:
 				return new RunCommand(
-					() -> drivetrain.drive(0.2, 0, 0, false, false),
+					() -> drivetrain.drive(0.18, 0, 0, false, false),
 					drivetrain)
-					.withTimeout(2);
+					.withTimeout(3.0).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(5.0)); //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			
 			case AUTON_DRIVE_PLUS:
 				return new RunCommand(
