@@ -32,7 +32,9 @@ public class Shooter extends SubsystemBase {
   public void periodic() {}
 
   public void run() {
-    motor.set(ShooterConstants.SHOOTER_SPEED);
+    if (this.getSpeed() <= ShooterConstants.SHOOTER_SPEED_RPM+ShooterConstants.SHOOTER_SPEED_RPM_RANGE) {
+     motor.set(ShooterConstants.SHOOTER_SPEED); 
+    }
   }
 
   public void reverse() {
