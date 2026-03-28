@@ -167,6 +167,7 @@ public final class Constants {
 		public static final double SHOOTER_SPEED = 1;
 		public static final int CURRENT_LIMIT_AMPS = 80;
 		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kCoast;
+		public static final double SHOOTER_SPEED_RPM_RAISED_MAX = 200; //How much it can go over before stopping power.
 	}
 
 	public static final class AgitatorConstants {
