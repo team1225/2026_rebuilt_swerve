@@ -194,6 +194,12 @@ public class RobotContainer {
 
 		driverController.b()
 			.whileTrue(new ClimberRun(climber));
+
+		driverController.leftStick().onTrue(new InstantCommand(()->{
+			drivetrain.MaxSpeedMultiplier = Constants.DrivetrainConstants.MAX_SPEED_IN_TURBO_MODE_MULTIPLIER;
+		})).onFalse(new InstantCommand(()->{
+			drivetrain.MaxSpeedMultiplier = 1.0;
+		}));
 		/*	
 		driverController.x()
 			.whileTrue(new Out(climber));

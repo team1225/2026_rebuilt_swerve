@@ -112,6 +112,8 @@ public class SwerveDrivetrain extends SubsystemBase {
 
 	private PIDController turnPidController; // the PID controller used to turn
 
+	public double MaxSpeedMultiplier = 1.0;
+
 	RobotConfig config;
 
 
@@ -278,9 +280,9 @@ public class SwerveDrivetrain extends SubsystemBase {
 		}
 
 		// Convert the commanded speeds into the correct units for the drivetrain
-		double xSpeedDelivered = xSpeedCommanded * DrivetrainConstants.MAX_SPEED_METERS_PER_SECOND;
-		double ySpeedDelivered = ySpeedCommanded * DrivetrainConstants.MAX_SPEED_METERS_PER_SECOND;
-		double rotDelivered = m_currentRotation * DrivetrainConstants.MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
+		double xSpeedDelivered = xSpeedCommanded * DrivetrainConstants.MAX_SPEED_METERS_PER_SECOND * this.MaxSpeedMultiplier;
+		double ySpeedDelivered = ySpeedCommanded * DrivetrainConstants.MAX_SPEED_METERS_PER_SECOND * this.MaxSpeedMultiplier;
+		double rotDelivered = m_currentRotation * DrivetrainConstants.MAX_ANGULAR_SPEED_RADIANS_PER_SECOND * this.MaxSpeedMultiplier;
 
 		var swerveModuleStates = DrivetrainConstants.DRIVE_KINEMATICS.toSwerveModuleStates(
 			fieldRelative
@@ -289,7 +291,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 				: new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
 
 		SwerveDriveKinematics.desaturateWheelSpeeds(
-			swerveModuleStates, DrivetrainConstants.MAX_SPEED_METERS_PER_SECOND);
+			swerveModuleStates, DrivetrainConstants.MAX_SPEED_METERS_PER_SECOND * this.MaxSpeedMultiplier);
 
 		m_frontLeft.setDesiredState(swerveModuleStates[0]);
 		m_frontRight.setDesiredState(swerveModuleStates[1]);
@@ -318,7 +320,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 	 */
 	public void setModuleStates(SwerveModuleState[] desiredStates) {
 		SwerveDriveKinematics.desaturateWheelSpeeds(
-			desiredStates, DrivetrainConstants.MAX_SPEED_METERS_PER_SECOND);
+			desiredStates, DrivetrainConstants.MAX_SPEED_METERS_PER_SECOND * this.MaxSpeedMultiplier);
 
 		m_frontLeft.setDesiredState(desiredStates[0]);
 		m_frontRight.setDesiredState(desiredStates[1]);
