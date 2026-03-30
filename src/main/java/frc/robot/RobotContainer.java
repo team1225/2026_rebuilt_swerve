@@ -25,8 +25,8 @@ import frc.robot.Constants.DrivetrainConstants;
 //import frc.robot.commands.algae_blaster.BlastAlgae;
 //import frc.robot.commands.algae_blaster.IntakeAlgae;
 //import frc.robot.commands.coralator.Eject;
-//import frc.robot.commands.climber.Out;
-//import frc.robot.commands.climber.Climb;
+import frc.robot.commands.climber.ClimberGo;
+import frc.robot.commands.climber.ClimberRun;
 import frc.robot.commands.drivetrain.DrivetrainSetXFormation;
 import frc.robot.commands.intake.IntakeReverse;
 import frc.robot.commands.intake.IntakeRun;
@@ -40,6 +40,7 @@ import frc.robot.commands.shooterSystem.ShooterSystemRun;
 import frc.robot.commands.shooterSystem.ShooterSystemRun;
 import frc.robot.sensors.HMAccelerometer;
 import frc.robot.subsystems.Agitator;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrivetrain;
@@ -106,6 +107,7 @@ public class RobotContainer {
 	private final Intake intake = new Intake();
 	private final Shooter shooter = new Shooter();
 	private final Agitator agitator = new Agitator();
+	private final Climber climber = new Climber();
 	/*
 	private final AlgaeBlaster algaeBlaster = new AlgaeBlaster();
 	private final TelescopingArm telescopingArm = new TelescopingArm();
@@ -186,6 +188,12 @@ public class RobotContainer {
 
 		driverController.y()
 			.whileTrue(new IntakeReverse(intake));
+
+		driverController.a()
+			.whileTrue(new ClimberGo(climber));
+
+		driverController.b()
+			.whileTrue(new ClimberRun(climber));
 		/*	
 		driverController.x()
 			.whileTrue(new Out(climber));
