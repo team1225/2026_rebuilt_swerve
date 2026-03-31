@@ -31,6 +31,7 @@ import frc.robot.commands.drivetrain.DrivetrainSetXFormation;
 import frc.robot.commands.intake.IntakeReverse;
 import frc.robot.commands.intake.IntakeRun;
 import frc.robot.commands.shooterSystem.ShooterSystemRun;
+import frc.robot.commands.shooterSystem.ShooterSystemRunReverse;
 //import frc.robot.interfaces.ICamera;
 //import frc.robot.commands.indicator.*;
 //import frc.robot.commands.pivot_arm.ManuallyAdjustPivotArm;
@@ -186,8 +187,11 @@ public class RobotContainer {
 		driverController.x()
 			.whileTrue(new DrivetrainSetXFormation(drivetrain));
 
-		driverController.y()
+		driverController.rightBumper()
 			.whileTrue(new IntakeReverse(intake));
+			
+		driverController.leftBumper()
+			.whileTrue(new ShooterSystemRunReverse(agitator, shooter));
 
 		driverController.a()
 			.whileTrue(new ClimberGo(climber));
