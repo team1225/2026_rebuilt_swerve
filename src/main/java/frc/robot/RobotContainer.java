@@ -25,8 +25,8 @@ import frc.robot.Constants.DrivetrainConstants;
 //import frc.robot.commands.algae_blaster.BlastAlgae;
 //import frc.robot.commands.algae_blaster.IntakeAlgae;
 //import frc.robot.commands.coralator.Eject;
-import frc.robot.commands.climber.ClimberGo;
-import frc.robot.commands.climber.ClimberRun;
+import frc.robot.commands.climber.ClimberRetract;
+import frc.robot.commands.climber.ClimberExtend;
 import frc.robot.commands.drivetrain.DrivetrainSetXFormation;
 import frc.robot.commands.intake.IntakeReverse;
 import frc.robot.commands.intake.IntakeRun;
@@ -194,10 +194,10 @@ public class RobotContainer {
 			.whileTrue(new ShooterSystemRunReverse(agitator, shooter));
 
 		driverController.a()
-			.whileTrue(new ClimberGo(climber));
+			.whileTrue(new ClimberRetract(climber));
 
 		driverController.b()
-			.whileTrue(new ClimberRun(climber));
+			.whileTrue(new ClimberExtend(climber));
 		/*	
 		driverController.x()
 			.whileTrue(new Out(climber));
