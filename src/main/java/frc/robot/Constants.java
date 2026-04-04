@@ -165,6 +165,7 @@ public final class Constants {
 	public static final class ClimberConstants {
 		public static final double CLIMBER_SPEED = 0.5;
 		public static final double CLIMBER_REVERSE_SPEED = -0.5;
+		public static final double NUM_OF_ROTATIONS_TO_TOP = 400;
 		public static final int CURRENT_LIMIT_AMPS = 60;
 		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kBrake;
 	}

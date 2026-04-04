@@ -190,10 +190,10 @@ public class RobotContainer {
 			.whileTrue(new IntakeReverse(intake));
 
 		driverController.a()
-			.whileTrue(new ClimberRetract(climber));
+			.onTrue(new ClimberRetract(climber));
 
 		driverController.b()
-			.whileTrue(new ClimberExtend(climber));
+			.onTrue(new ClimberExtend(climber));
 		/*	
 		driverController.x()
 			.whileTrue(new Out(climber));
