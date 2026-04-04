@@ -51,8 +51,13 @@ src/main/java/frc/robot/
 #### Driver Controls (Xbox Controller)
 - Left Stick: Drive robot (Y axis for forward/backward, X axis for strafing)
 - Right Stick: Rotate robot (X axis)
-- A button: Wheals turn to X shape (useful for not getting pushed)
-- B button: Intake operation (will be moved)
+- X button: Wheals turn to X shape (useful for not getting pushed)
+- A button: Climber (will change)
+- B button: Climber (will change)
+- Right Trigger: button: Intake operation
+- Right Bumper: reverse Intake operation
+- Left Trigger: button: Shooter system operation (spin up shooter to speed and then start agitator)
+- Left Bumper: reverse Shooter system operation (spin shooter and agitator in reverse)
 
 ## Getting Started
 

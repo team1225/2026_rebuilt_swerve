@@ -35,11 +35,11 @@ public class Climber extends SubsystemBase {
   }
 
   public void run() {
-    motor.set(ClimberConstants.INTAKE_SPEED);
+    motor.set(ClimberConstants.CLIMBER_SPEED);
   }
 
   public void reverse() {
-    motor.set(ClimberConstants.INTAKE_REVERSE_SPEED);
+    motor.set(ClimberConstants.CLIMBER_REVERSE_SPEED);
   }
 
   public void stop() {

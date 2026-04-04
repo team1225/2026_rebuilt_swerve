@@ -25,12 +25,13 @@ import frc.robot.Constants.DrivetrainConstants;
 //import frc.robot.commands.algae_blaster.BlastAlgae;
 //import frc.robot.commands.algae_blaster.IntakeAlgae;
 //import frc.robot.commands.coralator.Eject;
-import frc.robot.commands.climber.ClimberGo;
-import frc.robot.commands.climber.ClimberRun;
+import frc.robot.commands.climber.ClimberRetract;
+import frc.robot.commands.climber.ClimberExtend;
 import frc.robot.commands.drivetrain.DrivetrainSetXFormation;
 import frc.robot.commands.intake.IntakeReverse;
 import frc.robot.commands.intake.IntakeRun;
 import frc.robot.commands.shooterSystem.ShooterSystemRun;
+import frc.robot.commands.shooterSystem.ShooterSystemRunReverse;
 //import frc.robot.interfaces.ICamera;
 //import frc.robot.commands.indicator.*;
 //import frc.robot.commands.pivot_arm.ManuallyAdjustPivotArm;
@@ -186,20 +187,24 @@ public class RobotContainer {
 		driverController.x()
 			.whileTrue(new DrivetrainSetXFormation(drivetrain));
 
-		driverController.y()
+		driverController.rightBumper()
 			.whileTrue(new IntakeReverse(intake));
+			
+		driverController.leftBumper()
+			.whileTrue(new ShooterSystemRunReverse(agitator, shooter));
 
 		driverController.a()
-			.whileTrue(new ClimberGo(climber));
+			.whileTrue(new ClimberRetract(climber));
 
 		driverController.b()
-			.whileTrue(new ClimberRun(climber));
+			.whileTrue(new ClimberExtend(climber));
 
 		driverController.leftStick().onTrue(new InstantCommand(()->{
 			drivetrain.MaxSpeedMultiplier = Constants.DrivetrainConstants.MAX_SPEED_IN_TURBO_MODE_MULTIPLIER;
 		})).onFalse(new InstantCommand(()->{
 			drivetrain.MaxSpeedMultiplier = 1.0;
 		}));
+			
 		/*	
 		driverController.x()
 			.whileTrue(new Out(climber));
