@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Climber;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ClimberGo extends Command {
-  /** Creates a new ClimberReverse. */
+public class ClimberExtend extends Command {
+  /** Creates a new Climber. */
   private Climber climber;
-
-  public ClimberGo(Climber climber) {
+  
+  public ClimberExtend(Climber climber) {
     this.climber = climber;
     addRequirements(climber);
   }
@@ -24,7 +24,7 @@ public class ClimberGo extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.reverse();
+    climber.run();
   }
 
   // Called once the command ends or is interrupted.
