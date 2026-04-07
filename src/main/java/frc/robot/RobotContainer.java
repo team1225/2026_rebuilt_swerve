@@ -108,7 +108,7 @@ public class RobotContainer {
 	private final Intake intake = new Intake();
 	private final Shooter shooter = new Shooter();
 	private final Agitator agitator = new Agitator();
-	private final Climber climber = new Climber();
+	// private final Climber climber = new Climber();
 	/*
 	private final AlgaeBlaster algaeBlaster = new AlgaeBlaster();
 	private final TelescopingArm telescopingArm = new TelescopingArm();
@@ -199,7 +199,7 @@ public class RobotContainer {
 		driverController.b()
 			.whileTrue(new ClimberExtend(climber));
 
-		driverController.leftStick().onTrue(new InstantCommand(()->{
+		driverController.rightStick().onTrue(new InstantCommand(()->{
 			drivetrain.MaxSpeedMultiplier = Constants.DrivetrainConstants.MAX_SPEED_IN_TURBO_MODE_MULTIPLIER;
 		})).onFalse(new InstantCommand(()->{
 			drivetrain.MaxSpeedMultiplier = 1.0;

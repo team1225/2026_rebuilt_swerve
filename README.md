@@ -50,7 +50,7 @@ src/main/java/frc/robot/
 
 #### Driver Controls (Xbox Controller)
 - Left Stick: Drive robot (Y axis for forward/backward, X axis for strafing)
-- Right Stick: Rotate robot (X axis)
+- Right Stick: Rotate robot (X axis) (press down for turbo mode)
 - X button: Wheals turn to X shape (useful for not getting pushed)
 - A button: Climber (will change)
 - B button: Climber (will change)
