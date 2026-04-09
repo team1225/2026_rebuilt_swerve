@@ -20,7 +20,7 @@ import frc.robot.Constants.DrivetrainConstants;
 //import frc.robot.subsystems.TelescopingArm;
 //import frc.robot.subsystems.AlgaeBlaster;
 //import frc.robot.subsystems.Coralator;
-//import frc.robot.subsystems.Climber;
+// import frc.robot.subsystems.Climber;
 //import frc.robot.subsystems.Indicator;
 //import frc.robot.commands.algae_blaster.BlastAlgae;
 //import frc.robot.commands.algae_blaster.IntakeAlgae;
@@ -109,7 +109,7 @@ public class RobotContainer {
 	private final Intake intake = new Intake();
 	private final Shooter shooter = new Shooter();
 	private final Agitator agitator = new Agitator();
-	// private final Climber climber = new Climber();
+	private final Climber climber = new Climber();
 	/*
 	private final AlgaeBlaster algaeBlaster = new AlgaeBlaster();
 	private final TelescopingArm telescopingArm = new TelescopingArm();
@@ -188,16 +188,16 @@ public class RobotContainer {
 		driverController.x()
 			.whileTrue(new DrivetrainSetXFormation(drivetrain));
 
-		driverController.rightBumper()
+		driverController.y()
 			.whileTrue(new IntakeReverse(intake));
 			
-		driverController.leftBumper()
+		driverController.b()
 			.whileTrue(new ShooterSystemRunReverse(agitator, shooter));
 
-		driverController.a()
+		driverController.rightBumper()
 			.whileTrue(new ClimberRetract(climber));
 
-		driverController.b()
+		driverController.leftBumper()
 			.whileTrue(new ClimberExtend(climber));
 
 		driverController.rightStick().onTrue(new InstantCommand(()->{
@@ -297,17 +297,17 @@ public class RobotContainer {
 			
 			case AUTON_DRIVE_PLUS:
 				return new RunCommand(
-					() -> drivetrain.drive(0.28, 0, 0, false, false),
+					() -> drivetrain.drive(0.35/*0.28*/, 0, 0, false, false),
 					drivetrain)
-					.withTimeout(3.5).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(5.0)).andThen(new RunCommand(
+					.withTimeout((3.5*0.28)/0.35).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(3.5)).andThen(new RunCommand(
 					() -> drivetrain.drive(0.0, 0.3, -0.17, false, false),
 					drivetrain).withTimeout(3).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new RunCommand(
 					() -> drivetrain.drive(0.3, 0.0, 0.0, false, false),
-					drivetrain).withTimeout(1.7).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberExtend(climber)).andThen(new RunCommand(
+					drivetrain).withTimeout(1.5/*1.7*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberExtend(climber)).andThen(new RunCommand(
 					() -> drivetrain.drive(0.0, 0.0, -0.38, true, false),
-					drivetrain).withTimeout(1.4).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new RunCommand(
+					drivetrain).withTimeout(1.0/*1.4*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new RunCommand(
 					() -> drivetrain.drive(0, 0.0, 0.38, false, false),
-					drivetrain).withTimeout(1.4).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberClimb(climber));
+					drivetrain).withTimeout(1.0/*1.4*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberClimb(climber));
 			
 			case AUTON_DO_NOTHING:
 			default:
