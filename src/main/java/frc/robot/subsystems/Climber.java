@@ -9,6 +9,8 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Ports;
 import frc.robot.Constants.ClimberConstants;
@@ -17,9 +19,11 @@ public class Climber extends SubsystemBase {
   
   private final SparkMax motor;
 	private final SparkMaxConfig motorConfig;
+  private final DigitalInput limitSwitch;
 
   /** Creates a new Climber. */
   public Climber() {
+    limitSwitch = new DigitalInput(Ports.Digital.CLIMBER_LIMIT_SWITCH);
     motor = new SparkMax(Ports.CAN.CLIMBER, MotorType.kBrushless);
     motorConfig = new SparkMaxConfig();
     motorConfig
@@ -38,8 +42,20 @@ public class Climber extends SubsystemBase {
     motor.set(ClimberConstants.CLIMBER_SPEED);
   }
 
+  public double getPosition(){
+    return motor.getEncoder().getPosition();
+  }
+
+  public boolean isLimitSwitch(){
+    return !limitSwitch.get();
+  }
+
   public void reverse() {
     motor.set(ClimberConstants.CLIMBER_REVERSE_SPEED);
+  }
+
+  public void resetEncoder(){
+    motor.getEncoder().setPosition(0);
   }
 
   public void stop() {

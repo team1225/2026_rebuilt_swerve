@@ -24,6 +24,7 @@ public class Ports {
 		 * Digital ports
 		 */
 		public static class Digital {
+			public static final int CLIMBER_LIMIT_SWITCH = 0;
 		}
 		
 		/**

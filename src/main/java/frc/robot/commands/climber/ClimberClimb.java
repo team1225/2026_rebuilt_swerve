@@ -9,11 +9,11 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ClimberRetract extends Command {
+public class ClimberClimb extends Command {
   /** Creates a new ClimberReverse. */
   private Climber climber;
 
-  public ClimberRetract(Climber climber) {
+  public ClimberClimb(Climber climber) {
     this.climber = climber;
     addRequirements(climber);
   }
@@ -38,6 +38,6 @@ public class ClimberRetract extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return climber.isLimitSwitch();
+    return climber.getPosition() <= ClimberConstants.CLIMB_POSITION;
   }
 }
