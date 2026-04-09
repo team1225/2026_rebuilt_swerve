@@ -26,6 +26,7 @@ import frc.robot.Constants.DrivetrainConstants;
 //import frc.robot.commands.algae_blaster.IntakeAlgae;
 //import frc.robot.commands.coralator.Eject;
 import frc.robot.commands.climber.ClimberRetract;
+import frc.robot.commands.climber.ClimberClimb;
 import frc.robot.commands.climber.ClimberExtend;
 import frc.robot.commands.drivetrain.DrivetrainSetXFormation;
 import frc.robot.commands.intake.IntakeReverse;
@@ -190,10 +191,10 @@ public class RobotContainer {
 			.whileTrue(new IntakeReverse(intake));
 
 		driverController.a()
-			.onTrue(new ClimberRetract(climber));
+			.whileTrue(new ClimberRetract(climber));
 
 		driverController.b()
-			.onTrue(new ClimberExtend(climber));
+			.whileTrue(new ClimberExtend(climber));
 		/*	
 		driverController.x()
 			.whileTrue(new Out(climber));
@@ -281,13 +282,21 @@ public class RobotContainer {
 				return new RunCommand(
 					() -> drivetrain.drive(0.28, 0, 0, false, false),
 					drivetrain)
-					.withTimeout(3.5).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(5.0)); //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					.withTimeout(3.5).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(5.0));
 			
 			case AUTON_DRIVE_PLUS:
 				return new RunCommand(
-					() -> drivetrain.drive(-0.3, 0, 0, false, false),
+					() -> drivetrain.drive(0.28, 0, 0, false, false),
 					drivetrain)
-					.withTimeout(4);
+					.withTimeout(3.5).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(5.0)).andThen(new RunCommand(
+					() -> drivetrain.drive(0.0, 0.3, -0.17, false, false),
+					drivetrain).withTimeout(3).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new RunCommand(
+					() -> drivetrain.drive(0.3, 0.0, 0.0, false, false),
+					drivetrain).withTimeout(1.7).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberExtend(climber)).andThen(new RunCommand(
+					() -> drivetrain.drive(0.0, 0.0, -0.38, true, false),
+					drivetrain).withTimeout(1.4).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new RunCommand(
+					() -> drivetrain.drive(0, 0.0, 0.38, false, false),
+					drivetrain).withTimeout(1.4).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberClimb(climber));
 			
 			case AUTON_DO_NOTHING:
 			default:
