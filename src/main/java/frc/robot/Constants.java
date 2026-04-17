@@ -158,7 +158,7 @@ public final class Constants {
 
 	public static final class IntakeConstants {
 		public static final double INTAKE_SPEED = 1;
-		public static final double INTAKE_REVERSE_SPEED = -0.75;
+		public static final double INTAKE_REVERSE_SPEED = -1.0;
 		public static final int CURRENT_LIMIT_AMPS = 60;
 		public static final IdleMode MOTOR_IDLE_MODE = IdleMode.kBrake;
 	}

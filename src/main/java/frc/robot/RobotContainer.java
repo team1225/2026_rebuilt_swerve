@@ -133,8 +133,8 @@ public class RobotContainer {
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public RobotContainer() {
-		autonOptionChooser.setDefaultOption("Simple Drive and Shoot", AUTON_SIMPLE_DRIVE_AND_SHOOT);
-		autonOptionChooser.addOption("Drive plus", AUTON_DRIVE_PLUS);
+		autonOptionChooser.setDefaultOption("Drive plus", AUTON_DRIVE_PLUS);
+		autonOptionChooser.addOption("Simple Drive and Shoot", AUTON_SIMPLE_DRIVE_AND_SHOOT);
 		autonOptionChooser.addOption("Do nothing", AUTON_DO_NOTHING);
 		SmartDashboard.putData("Auton options", autonOptionChooser);
 
@@ -297,17 +297,17 @@ public class RobotContainer {
 			
 			case AUTON_DRIVE_PLUS:
 				return new RunCommand(
-					() -> drivetrain.drive(0.35/*0.28*/, 0, 0, false, false),
+					() -> drivetrain.drive(0.6/*0.28*/, 0, 0, false, false),
 					drivetrain)
-					.withTimeout((3.5*0.28)/0.35).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(3.5)).andThen(new RunCommand(
-					() -> drivetrain.drive(0.0, 0.3, -0.17, false, false),
-					drivetrain).withTimeout(3).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new RunCommand(
-					() -> drivetrain.drive(0.3, 0.0, 0.0, false, false),
+					.withTimeout(((3.5*0.28)/0.6)).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(3.5)).andThen(new RunCommand(
+					() -> drivetrain.drive(0.0, 0.3, -0.24/*-0.17 */, false, false),
+					drivetrain).withTimeout(2.5).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new RunCommand(
+					() -> drivetrain.drive(0.3, 0.0, 0.00, false, false),
 					drivetrain).withTimeout(1.5/*1.7*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberExtend(climber)).andThen(new RunCommand(
-					() -> drivetrain.drive(0.0, 0.0, -0.38, true, false),
+					() -> drivetrain.drive(0.0, 0.0/*0.0 */, -0.28, true, false),
 					drivetrain).withTimeout(1.0/*1.4*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new RunCommand(
-					() -> drivetrain.drive(0, 0.0, 0.38, false, false),
-					drivetrain).withTimeout(1.0/*1.4*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberClimb(climber));
+					() -> drivetrain.drive(0.0, 0.0, 0.45, false, false),
+					drivetrain).withTimeout(1.4/*1.4*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberClimb(climber));
 			
 			case AUTON_DO_NOTHING:
 			default:
