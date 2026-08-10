@@ -106,6 +106,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		Constants.DrivetrainConstants.MAX_SPEED_METERS_PER_SECOND = 8.0;
+		Constants.DrivetrainConstants.MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = 4* Math.PI;
 	}
 
 	/** This function is called periodically during operator control. */
@@ -151,7 +153,8 @@ public class Robot extends TimedRobot {
 
 		m_robotContainer.getField().setRobotPose(m_robotContainer.getDrivetrain().getPose());
 		SmartDashboard.putNumber(   "Heading",             m_robotContainer.getDrivetrain().getHeading());
-
+		
+		SmartDashboard.putNumber("shooter_RPM",m_robotContainer.getShooter().getSpeed());
 		/*
 		SmartDashboard.putNumber("AccelZ", m_robotContainer.getAccelerometer().getAccelZ());
 		SmartDashboard.putNumber("Tilt", m_robotContainer.getAccelerometer().getTilt());
@@ -180,6 +183,8 @@ public class Robot extends TimedRobot {
 	public void testInit() {
 		// Cancels all running commands at the start of test mode.
 		CommandScheduler.getInstance().cancelAll();
+		Constants.DrivetrainConstants.MAX_SPEED_METERS_PER_SECOND = 1.2;
+		Constants.DrivetrainConstants.MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = 0.8 * Math.PI;
 	}
 
 	/** This function is called periodically during test mode. */

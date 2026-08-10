@@ -36,7 +36,7 @@ public class Agitator extends SubsystemBase {
   }
 
   public void reverse() {
-    motor.set(-0.75 * AgitatorConstants.AGITATOR_SPEED);
+    motor.set(-1 * AgitatorConstants.AGITATOR_SPEED);
   }
 
   public void stop() {

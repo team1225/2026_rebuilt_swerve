@@ -24,6 +24,7 @@ public class Ports {
 		 * Digital ports
 		 */
 		public static class Digital {
+			public static final int CLIMBER_LIMIT_SWITCH = 0;
 		}
 		
 		/**
@@ -63,6 +64,8 @@ public class Ports {
 			public static final int INTAKE = 14;
 			public static final int AGITATOR = 15;
 			public static final int SHOOTER = 16;
+
+			public static final int CLIMBER = 20;
 		}
 		
 		/**

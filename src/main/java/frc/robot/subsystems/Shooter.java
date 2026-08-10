@@ -32,15 +32,23 @@ public class Shooter extends SubsystemBase {
   public void periodic() {}
 
   public void run() {
-    motor.set(ShooterConstants.SHOOTER_SPEED);
+    if (this.getSpeed() <= ShooterConstants.SHOOTER_SPEED_RPM+ShooterConstants.SHOOTER_SPEED_RPM_RAISED_MAX) {
+     motor.set(ShooterConstants.SHOOTER_SPEED); 
+    }else{
+      motor.set(0);
+    }
   }
 
   public void reverse() {
-    motor.set(-0.75 * ShooterConstants.SHOOTER_SPEED);
+    motor.set(-1 * ShooterConstants.SHOOTER_SPEED);
+  }
+
+  public double getSpeed(){
+    return motor.getEncoder().getVelocity();
   }
 
   public boolean isAtSpeed() {
-    return motor.getEncoder().getVelocity() >= ShooterConstants.SHOOTER_SPEED_RPM;
+    return this.getSpeed() >= ShooterConstants.SHOOTER_SPEED_RPM;
   }
 
   public void stop() {

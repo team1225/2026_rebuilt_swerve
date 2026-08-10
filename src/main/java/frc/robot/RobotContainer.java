@@ -20,17 +20,19 @@ import frc.robot.Constants.DrivetrainConstants;
 //import frc.robot.subsystems.TelescopingArm;
 //import frc.robot.subsystems.AlgaeBlaster;
 //import frc.robot.subsystems.Coralator;
-//import frc.robot.subsystems.Climber;
+// import frc.robot.subsystems.Climber;
 //import frc.robot.subsystems.Indicator;
 //import frc.robot.commands.algae_blaster.BlastAlgae;
 //import frc.robot.commands.algae_blaster.IntakeAlgae;
 //import frc.robot.commands.coralator.Eject;
-//import frc.robot.commands.climber.Out;
-//import frc.robot.commands.climber.Climb;
+import frc.robot.commands.climber.ClimberRetract;
+import frc.robot.commands.climber.ClimberClimb;
+import frc.robot.commands.climber.ClimberExtend;
 import frc.robot.commands.drivetrain.DrivetrainSetXFormation;
 import frc.robot.commands.intake.IntakeReverse;
 import frc.robot.commands.intake.IntakeRun;
 import frc.robot.commands.shooterSystem.ShooterSystemRun;
+import frc.robot.commands.shooterSystem.ShooterSystemRunReverse;
 //import frc.robot.interfaces.ICamera;
 //import frc.robot.commands.indicator.*;
 //import frc.robot.commands.pivot_arm.ManuallyAdjustPivotArm;
@@ -40,6 +42,7 @@ import frc.robot.commands.shooterSystem.ShooterSystemRun;
 import frc.robot.commands.shooterSystem.ShooterSystemRun;
 import frc.robot.sensors.HMAccelerometer;
 import frc.robot.subsystems.Agitator;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrivetrain;
@@ -106,6 +109,7 @@ public class RobotContainer {
 	private final Intake intake = new Intake();
 	private final Shooter shooter = new Shooter();
 	private final Agitator agitator = new Agitator();
+	private final Climber climber = new Climber();
 	/*
 	private final AlgaeBlaster algaeBlaster = new AlgaeBlaster();
 	private final TelescopingArm telescopingArm = new TelescopingArm();
@@ -129,8 +133,8 @@ public class RobotContainer {
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public RobotContainer() {
-		autonOptionChooser.setDefaultOption("Simple Drive and Shoot", AUTON_SIMPLE_DRIVE_AND_SHOOT);
-		autonOptionChooser.addOption("Drive plus", AUTON_DRIVE_PLUS);
+		autonOptionChooser.setDefaultOption("Drive plus", AUTON_DRIVE_PLUS);
+		autonOptionChooser.addOption("Simple Drive and Shoot", AUTON_SIMPLE_DRIVE_AND_SHOOT);
 		autonOptionChooser.addOption("Do nothing", AUTON_DO_NOTHING);
 		SmartDashboard.putData("Auton options", autonOptionChooser);
 
@@ -186,6 +190,22 @@ public class RobotContainer {
 
 		driverController.y()
 			.whileTrue(new IntakeReverse(intake));
+			
+		driverController.b()
+			.whileTrue(new ShooterSystemRunReverse(agitator, shooter));
+
+		driverController.rightBumper()
+			.whileTrue(new ClimberRetract(climber));
+
+		driverController.leftBumper()
+			.whileTrue(new ClimberExtend(climber));
+
+		driverController.rightStick().onTrue(new InstantCommand(()->{
+			drivetrain.MaxSpeedMultiplier = Constants.DrivetrainConstants.MAX_SPEED_IN_TURBO_MODE_MULTIPLIER;
+		})).onFalse(new InstantCommand(()->{
+			drivetrain.MaxSpeedMultiplier = 1.0;
+		}));
+			
 		/*	
 		driverController.x()
 			.whileTrue(new Out(climber));
@@ -271,15 +291,23 @@ public class RobotContainer {
 		switch (autonOption) {
 			case AUTON_SIMPLE_DRIVE_AND_SHOOT:
 				return new RunCommand(
-					() -> drivetrain.drive(0.18, 0, 0, false, false),
+					() -> drivetrain.drive(0.28, 0, 0, false, false),
 					drivetrain)
-					.withTimeout(3.0).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(5.0)); //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					.withTimeout(3.5).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(5.0));
 			
 			case AUTON_DRIVE_PLUS:
 				return new RunCommand(
-					() -> drivetrain.drive(-0.3, 0, 0, false, false),
+					() -> drivetrain.drive(0.6/*0.28*/, 0, 0, false, false),
 					drivetrain)
-					.withTimeout(4);
+					.withTimeout(((3.5*0.28)/0.6)).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain)).andThen(new ShooterSystemRun(agitator, shooter).repeatedly().withTimeout(3.5)).andThen(new RunCommand(
+					() -> drivetrain.drive(0.0, 0.3, -0.24/*-0.17 */, false, false),
+					drivetrain).withTimeout(2.5).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new RunCommand(
+					() -> drivetrain.drive(0.3, 0.0, 0.00, false, false),
+					drivetrain).withTimeout(1.5/*1.7*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberExtend(climber)).andThen(new RunCommand(
+					() -> drivetrain.drive(0.0, 0.0/*0.0 */, -0.28, true, false),
+					drivetrain).withTimeout(1.0/*1.4*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new RunCommand(
+					() -> drivetrain.drive(0.0, 0.0, 0.45, false, false),
+					drivetrain).withTimeout(1.4/*1.4*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberClimb(climber));
 			
 			case AUTON_DO_NOTHING:
 			default:
@@ -376,5 +404,10 @@ public class RobotContainer {
 	public SendableChooser<String> getAutonOptionChooser()
 	{
 		return autonOptionChooser;
+	}
+
+	public Shooter getShooter()
+	{
+		return shooter;
 	}
 }
