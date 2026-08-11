@@ -12,9 +12,8 @@ public class Ports {
 		//
 		// The radio is automatically set to 10.12.25.1
 		// The Rio is set to static 10.12.25.2, mask 255.255.255.0
-		// The Limelight is set to 10.12.25.11, mask 255.255.255.0, gateway 10.12.25.1
+		// The Limelight is set to 10.12.25.11, mask 255.255.255.0, gateway 10.12.25.1 //TODO: check if this is correct
 		// but note that pressing the reset button will revert to DHCP.
-		// The Raspberry Pi running FRCVision is set to static 10.12.25.12, mask 255.255.255.0, gateway 10.12.25.1, DNS blank
 		//
 		// If a device cannot be accessed (e.g. because its address was somehow obtained via DHCP and mDNS is not working),
 		// use Angry IP Scanner to find it!
@@ -45,8 +44,6 @@ public class Ports {
 		public static class CAN {
 			
 			//2026 Serve module drive base
-			public static final int RIO = 0;
-			public static final int PDP = 1;	
 
 			public static final int pigeon2 = 2;
 
@@ -73,8 +70,6 @@ public class Ports {
 		 */
 		public static class USB {
 			public static final int DRIVER_CONTROLLER = 0;
-			public static final int CODRIVER_CONTROLLER = 1;
-			public static final int CHARACTERIZATION_CONTROLLER = 2;
 		}
 		
 		/**
@@ -87,15 +82,11 @@ public class Ports {
 		 * PWM ports
 		 */
 		public static class PWM {
-			public static final int LED_STRIP = 9;
 		}
 
 		/**
 		 * USB cameras
 		 */
 		public static class UsbCamera {
-			public static final int FLOOR_CAMERA = 0;
-			public static final int SHOOTER_CAMERA = 1;
-			public static final int TOP_CAMERA = 2;
 		}
 }

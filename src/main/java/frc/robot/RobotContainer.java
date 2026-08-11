@@ -68,9 +68,7 @@ public class RobotContainer {
 
 	// The driver's and copilot's joystick(s) and controller(s)
 
-	CommandXboxController driverController = new CommandXboxController(Ports.USB.DRIVER_CONTROLLER); //RIGHT_JOYSTICK);
-	CommandXboxController coDriverController = new CommandXboxController(Ports.USB.CODRIVER_CONTROLLER); //MAIN_JOYSTICK);
-	CommandXboxController characterizationController = new CommandXboxController(Ports.USB.CHARACTERIZATION_CONTROLLER);
+	CommandXboxController driverController = new CommandXboxController(Ports.USB.DRIVER_CONTROLLER);
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.

@@ -5,10 +5,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
-//imports for Pathplanner follow commmands/stuff below
-import com.pathplanner.lib.config.RobotConfig;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -97,24 +93,12 @@ public class SwerveDrivetrain extends SubsystemBase {
 
 
 	// other variables
-	private boolean isTurning;  // indicates that the drivetrain is turning using the PID controller hereunder
-
-
-	private PIDController turnPidController; // the PID controller used to turn
 
 	public double MaxSpeedMultiplier = 1.0;
-
-	RobotConfig config;
 
 
 	/** Creates a new Drivetrain. */
 	public SwerveDrivetrain() {
-		try{
-			config = RobotConfig.fromGUISettings();
-		} catch (Exception e) {
-			// Handle exception as needed
-			e.printStackTrace();
-		}
 
 		m_frontLeft.resetEncoders(); // resets relative encoders
 		m_frontRight.resetEncoders();
@@ -132,11 +116,6 @@ public class SwerveDrivetrain extends SubsystemBase {
 		Pose2d initialPose = new Pose2d(initialTranslation,initialRotation);
 		resetOdometry(initialPose);
 
-		//creates a PID controller
-		turnPidController = new PIDController(TURN_PROPORTIONAL_GAIN, TURN_INTEGRAL_GAIN, TURN_DERIVATIVE_GAIN);	
-		
-		turnPidController.enableContinuousInput(-180, 180); // because -180 degrees is the same as 180 degrees (needs input range to be defined first)
-		turnPidController.setTolerance(DEGREE_THRESHOLD); // n degree error tolerated
 
 	}
 
@@ -152,7 +131,6 @@ public class SwerveDrivetrain extends SubsystemBase {
 				m_rearRight.getPosition()
 			});
 
-		calculateTurnAngleUsingPidController();
 	}
 
 
@@ -280,47 +258,6 @@ public class SwerveDrivetrain extends SubsystemBase {
 	public void stop()
 	{
 		drive(0, 0, 0, false, false);
-
-		isTurning = false;
-	}
-
-	/** in dash
-	 * Returns the heading of the robot.
-	 *
-	 * @return the robot's heading in degrees, from -180 to 180
-	 */
-	public double getHeading() {
-		return Rotation2d.fromDegrees(-1 * GYRO_ORIENTATION * m_gyro.getYaw().getValueAsDouble()).getDegrees();
-	}
-
-
-	public void calculateTurnAngleUsingPidController() {	
-		if (isTurning) {
-			double output = MathUtil.clamp(turnPidController.calculate(getHeading()), -MAX_TURN_PCT_OUTPUT, MAX_TURN_PCT_OUTPUT);
-			pidWriteRotation(output);
-		}
-	}
-
-
-	public void pidWriteRotation(double output) {
-
-		//System.out.println("position error: " + turnPidController.getPositionError());
-		//System.out.println("raw output: " + output);
-		
-		// calling disable() on controller will force a call to pidWrite with zero output
-		// which we need to handle by not doing anything that could have a side effect 
-		if (output != 0 && Math.abs(turnPidController.getError()) < DEGREE_THRESHOLD)
-		{
-			output = 0;
-		}
-		if (output != 0 && Math.abs(output) < MIN_TURN_PCT_OUTPUT)
-		{
-			output = Math.signum(output) * MIN_TURN_PCT_OUTPUT;
-		}
-
-		//System.out.println("output: " + output);
-
-		drive(0, 0, output, false, false); // TODO double-check sign
 	}
 
 }
