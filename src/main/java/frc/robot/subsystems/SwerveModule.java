@@ -35,7 +35,6 @@ public class SwerveModule {
 	private final SparkMaxConfig turningConfig;
 
 	private final RelativeEncoder m_drivingEncoder;
-	private final RelativeEncoder m_turningEncoder;
 	private final SparkAbsoluteEncoder m_turningAbsoluteEncoder;
 
 	private final SparkClosedLoopController m_drivingClosedLoopController;
@@ -57,7 +56,6 @@ public class SwerveModule {
 
 		// Setup encoders and PID controllers for the driving and turning SPARKS MAX.
 		m_drivingEncoder = m_drivingSparkMax.getEncoder();
-		m_turningEncoder = m_turningSparkMax.getEncoder();
 		m_turningAbsoluteEncoder = m_turningSparkMax.getAbsoluteEncoder();
 
 		m_drivingClosedLoopController = m_drivingSparkMax.getClosedLoopController();
@@ -101,15 +99,6 @@ public class SwerveModule {
 		m_drivingEncoder.setPosition(0);
 	}
 
-	/**
-	 * Returns the current state of the module.
-	 *
-	 * @return The current state of the module.
-	 */
-	public SwerveModuleState getState() {
-		return new SwerveModuleState(m_drivingEncoder.getVelocity(),
-			new Rotation2d(m_turningAbsoluteEncoder.getPosition()));
-	}
 
 	/**
 	 * Returns the current position of the module.
@@ -152,25 +141,6 @@ public class SwerveModule {
 		m_desiredState = desiredState;
 	}
 
-	public RelativeEncoder getDrivingEncoder()
-	{
-		return m_drivingEncoder;
-	}
-
-	public RelativeEncoder getTurningEncoder()
-	{
-		return m_turningEncoder;
-	}
-
-	public SparkAbsoluteEncoder getTurningAbsoluteEncoder()
-	{
-		return m_turningAbsoluteEncoder;
-	}
-
-	public SwerveModuleState getDesiredState()
-	{
-		return m_desiredState;
-	}
 	/** Zeroes the SwerveModule drive encoders. */
 	public void resetEncoders() {
 		m_drivingEncoder.setPosition(0);
