@@ -22,8 +22,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-// import com.studica.frc.AHRS;
-// import com.studica.frc.AHRS.NavXComType;
 
 import frc.robot.Constants.DrivetrainConstants;
 import frc.utils.SwerveUtils;
