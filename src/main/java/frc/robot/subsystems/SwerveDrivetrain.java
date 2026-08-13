@@ -79,7 +79,9 @@ public class SwerveDrivetrain extends SubsystemBase {
 			m_frontRight.getPosition(),
 			m_rearLeft.getPosition(),
 			m_rearRight.getPosition()
-		});
+		},
+		new Pose2d()
+		);
 
 
 	// other variables
@@ -124,8 +126,9 @@ public class SwerveDrivetrain extends SubsystemBase {
 			LimelightHelpers.SetRobotOrientation("limelight", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
 			LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
 			
+			boolean doRejectUpdate = false;
 			// if our angular velocity is greater than 360 degrees per second, ignore vision updates
-			if(Math.abs(m_gyro.getRate()) > 360)
+			if(Math.abs(m_currentRotation) > 360)
 			{
 				doRejectUpdate = true;
 			}
