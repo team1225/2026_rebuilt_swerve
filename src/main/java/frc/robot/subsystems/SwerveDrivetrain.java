@@ -5,13 +5,16 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+
+import edu.wpi.first.math.VecBuilder;
+import frc.robot.LimelightHelpers;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
@@ -32,24 +35,11 @@ public class SwerveDrivetrain extends SubsystemBase {
 
 	// calibration: manually move wheels so it's facing straight then record the number below, deploy code then enable :)
 
-	public static final int GYRO_ORIENTATION = 1; // might be able to merge with kGyroReversed
+	public static final int GYRO_ORIENTATION = 1;
 
 	public static final double FIELD_LENGTH_INCHES = 54*12+1; // 54ft 1in
 	public static final double FIELD_WIDTH_INCHES = 26*12+7; // 26ft 7in
-
-	// turn settings
-	// NOTE: it might make sense to decrease the PID controller period below 0.02 sec (which is the period used by the main loop)
-	static final double TURN_PID_CONTROLLER_PERIOD_SECONDS = .01; // 0.01 sec = 10 ms 	
 	
-	static final double MIN_TURN_PCT_OUTPUT = 0.1; // 0.1;
-	static final double MAX_TURN_PCT_OUTPUT = 0.2; // 0.4;
-	
-	static final double TURN_PROPORTIONAL_GAIN = 0.001; // 0.01;
-	static final double TURN_INTEGRAL_GAIN = 0.0;
-	static final double TURN_DERIVATIVE_GAIN = 0.0; // 0.0001
-	
-	static final int DEGREE_THRESHOLD = 10; // 3;
-	// end turn settings	
 
 	// Create SwerveModules
 	private final SwerveModule m_frontLeft = new SwerveModule(
@@ -81,7 +71,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 	private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
 	// Odometry class for tracking robot pose
-	SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
+	SwerveDrivePoseEstimator m_poseEstimator = new SwerveDrivePoseEstimator(
 		DrivetrainConstants.DRIVE_KINEMATICS,
 		Rotation2d.fromDegrees(GYRO_ORIENTATION * m_gyro.getYaw().getValueAsDouble()),
 		new SwerveModulePosition[] {
@@ -122,7 +112,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 	@Override
 	public void periodic() {
 		// Update the odometry in the periodic block
-		m_odometry.update(
+		m_poseEstimator.update(
 			Rotation2d.fromDegrees(GYRO_ORIENTATION * m_gyro.getYaw().getValueAsDouble()),
 			new SwerveModulePosition[] {
 				m_frontLeft.getPosition(),
@@ -130,6 +120,29 @@ public class SwerveDrivetrain extends SubsystemBase {
 				m_rearLeft.getPosition(),
 				m_rearRight.getPosition()
 			});
+
+			LimelightHelpers.SetRobotOrientation("limelight", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+			LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+			
+			// if our angular velocity is greater than 360 degrees per second, ignore vision updates
+			if(Math.abs(m_gyro.getRate()) > 360)
+			{
+				doRejectUpdate = true;
+			}
+			if(mt2.tagCount == 0)
+			{
+				doRejectUpdate = true;
+			}
+			if(!doRejectUpdate)
+			{
+				m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+				m_poseEstimator.addVisionMeasurement(
+					mt2.pose,
+					mt2.timestampSeconds);
+			}
+
+
+
 
 	}
 
@@ -140,7 +153,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 	 * @param pose The pose to which to set the odometry.
 	 */
 	public void resetOdometry(Pose2d pose) {
-		m_odometry.resetPosition(
+		m_poseEstimator.resetPosition(
 			Rotation2d.fromDegrees(GYRO_ORIENTATION * m_gyro.getYaw().getValueAsDouble()),
 			new SwerveModulePosition[] {
 				m_frontLeft.getPosition(),
