@@ -240,7 +240,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 		var swerveModuleStates = DrivetrainConstants.DRIVE_KINEMATICS.toSwerveModuleStates(
 			fieldRelative
 				? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, 
-					Rotation2d.fromDegrees(GYRO_ORIENTATION * m_gyro.getYaw().getValueAsDouble()))
+					Rotation2d.fromDegrees(m_poseEstimator.getEstimatedPosition().getRotation().getDegrees()))
 				: new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
 
 		SwerveDriveKinematics.desaturateWheelSpeeds(
