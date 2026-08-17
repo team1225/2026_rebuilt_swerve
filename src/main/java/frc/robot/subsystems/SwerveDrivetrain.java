@@ -5,6 +5,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPLTVController;
 
 import edu.wpi.first.math.VecBuilder;
 import frc.robot.LimelightHelpers;
@@ -19,6 +22,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.WPIUtilJNI;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
@@ -86,11 +90,22 @@ public class SwerveDrivetrain extends SubsystemBase {
 
 	// other variables
 
+	
+
 	public double MaxSpeedMultiplier = 1.0;
+
+	RobotConfig config;
 
 
 	/** Creates a new Drivetrain. */
 	public SwerveDrivetrain() {
+		try{
+			config = RobotConfig.fromGUISettings();
+		} catch (Exception e) {
+			// Handle exception as needed
+			e.printStackTrace();
+		}
+
 
 		m_frontLeft.resetEncoders(); // resets relative encoders
 		m_frontRight.resetEncoders();
@@ -108,6 +123,28 @@ public class SwerveDrivetrain extends SubsystemBase {
 		Pose2d initialPose = new Pose2d(initialTranslation,initialRotation);
 		resetOdometry(initialPose);
 
+
+		// Configure AutoBuilder last
+		AutoBuilder.configure(
+				this::getPose, // Robot pose supplier
+				this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+				this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+				(speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+				new PPLTVController(0.02), // PPLTVController is the built in path following controller for differential drive trains
+				config, // The robot configuration
+				() -> {
+				// Boolean supplier that controls when the path will be mirrored for the red alliance
+				// This will flip the path being followed to the red side of the field.
+				// THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+				var alliance = DriverStation.getAlliance();
+				if (alliance.isPresent()) {
+					return alliance.get() == DriverStation.Alliance.Red;
+				}
+				return false;
+				},
+				this // Reference to this subsystem to set requirements
+		);
 
 	}
 
@@ -276,4 +313,28 @@ public class SwerveDrivetrain extends SubsystemBase {
 		drive(0, 0, 0, false, false);
 	}
 
+	// Functions for pathplanner
+
+	public Pose2d getPose() {
+		return m_poseEstimator.getEstimatedPosition();
+	}
+
+	public void resetPose(Pose2d pose) {
+		resetOdometry(pose);
+	}
+
+	public ChassisSpeeds getRobotRelativeSpeeds (){
+
+		return DrivetrainConstants.DRIVE_KINEMATICS.toChassisSpeeds(
+			new SwerveModuleState[] {
+				m_frontLeft.getState(),
+				m_frontRight.getState(),
+				m_rearLeft.getState(),
+				m_rearRight.getState()
+			});
+	}
+
+	public void driveRobotRelative(ChassisSpeeds speeds){
+		this.drive(speeds.vxMetersPerSecond,speeds.vyMetersPerSecond,speeds.omegaRadiansPerSecond,false,false);
+	}
 }

@@ -141,4 +141,10 @@ public class SwerveModule {
 	public void resetEncoders() {
 		m_drivingEncoder.setPosition(0);
 	}
+
+	public SwerveModuleState getState() {
+		return new SwerveModuleState(
+			m_drivingEncoder.getVelocity(),
+			new Rotation2d(m_turningAbsoluteEncoder.getPosition()));
+	}
 }
