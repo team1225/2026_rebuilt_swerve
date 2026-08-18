@@ -27,6 +27,8 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrivetrain;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.cameraserver.CameraServer;
 
 
@@ -55,8 +57,13 @@ public class RobotContainer {
 	public static final String AUTON_DO_NOTHING = "Do Nothing";
 	public static final String AUTON_SIMPLE_DRIVE_AND_SHOOT = "Simple Drive and Shoot";
 	public static final String AUTON_DRIVE_PLUS = "Drive plus";
+	public static final String AUTON_PATHPLANNER = "Pathplanner";
 	//private String autonSelected;
 	private SendableChooser<String> autonOptionChooser = new SendableChooser<>();
+
+	//pathplanner
+	private final SendableChooser<Command> autoChooser;
+
 
 	// motorized devices
 
@@ -77,7 +84,14 @@ public class RobotContainer {
 		autonOptionChooser.setDefaultOption("Drive plus", AUTON_DRIVE_PLUS);
 		autonOptionChooser.addOption("Simple Drive and Shoot", AUTON_SIMPLE_DRIVE_AND_SHOOT);
 		autonOptionChooser.addOption("Do nothing", AUTON_DO_NOTHING);
+		autonOptionChooser.addOption("Pathplanner", AUTON_PATHPLANNER);
 		SmartDashboard.putData("Auton options", autonOptionChooser);
+
+
+		//pathplanner
+		autoChooser = AutoBuilder.buildAutoChooser();
+		SmartDashboard.putData("Pathplanner choices", autoChooser);
+
 
 		// Configure the button bindings
 
@@ -171,10 +185,15 @@ public class RobotContainer {
 					() -> drivetrain.drive(0.0, 0.0, 0.45, false, false),
 					drivetrain).withTimeout(1.4/*1.4*/).andThen(new InstantCommand(()->drivetrain.stop(),drivetrain))).andThen(new ClimberClimb(climber));
 			
+
+			case AUTON_PATHPLANNER:
+				return autoChooser.getSelected();
 			case AUTON_DO_NOTHING:
 			default:
 				return null;
 		} 
+
+		
 	}
 
 }
